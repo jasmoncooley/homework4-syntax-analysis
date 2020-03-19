@@ -41,6 +41,12 @@ struct TOKEN {
   char lexeme[100];
 };
 
+// define the grammar
+/*
+<expr> → <term> {(+ | -) <term>}
+<term> → <factor> {(* | /) <factor>}
+<factor> → id | int_constant | ( <expr> )
+*/
 /******************************************************/
 /* main driver */
 int main() {
@@ -176,6 +182,6 @@ int lex() {
 
  // create a struct TOKEN and return it
  struct TOKEN newToken = {nextToken, lexeme};
- 
+
  return nextToken;
 } /* End of function lex */
