@@ -67,6 +67,20 @@ int main() {
 
 }
 
+// parse expression
+void expr() {
+  printf("Enter <expr> \n");
+
+  // parse first term
+  term();
+
+  // as long as the next token is + or -, get the next token and parse the next term
+  while(nextToken == ADD_OP || nextToken == SUB_OP){
+    lex();
+    term();
+  }
+}
+
 /*****************************************************/
 /* lookup - a function to lookup operators and parentheses
  and return the token */
