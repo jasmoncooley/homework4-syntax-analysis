@@ -35,18 +35,30 @@ int lex();
 #define LEFT_PAREN 25
 #define RIGHT_PAREN 26
 
+// define a struct as the token
+struct TOKEN {
+  int token_number;
+  char lexeme[100];
+};
+
 /******************************************************/
 /* main driver */
-main() {
+int main() {
 /* Open the input data file and process its contents */
   if ((in_fp = fopen("front.in", "r")) == NULL)
-  printf("ERROR - cannot open front.in \n");
+    // open the file
+    printf("ERROR - cannot open front.in \n");
   else {
+    // get characters and lex()?
     getChar();
     do {
       lex();
     } while (nextToken != EOF);
   }
+
+  // seems like the tokenizer is already implemented for us -> will need to parse as tokens come in
+
+
 }
 
 /*****************************************************/
@@ -104,7 +116,7 @@ void getChar() {
     if (isalpha(nextChar))
     charClass = LETTER;
  else if (isdigit(nextChar))
- charClass = DIGIT;
+  charClass = DIGIT;
  else charClass = UNKNOWN;
  }
  else
@@ -161,5 +173,9 @@ int lex() {
  } /* End of switch */
  printf("Next token is: %d, Next lexeme is %s\n",
  nextToken, lexeme);
+
+ // create a struct TOKEN and return it
+ struct TOKEN newToken = {nextToken, lexeme};
+ 
  return nextToken;
 } /* End of function lex */
