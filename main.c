@@ -41,6 +41,9 @@ struct TOKEN {
   char lexeme[100];
 };
 
+// function prototypes for just expr()
+void expr();
+
 // define the grammar
 /*
 <expr> → <term> {(+ | -) <term>}
@@ -65,6 +68,10 @@ int main() {
   // seems like the tokenizer is already implemented for us -> will need to parse as tokens come in
 
 
+}
+
+void error(){
+  printf("ERROR: \n");
 }
 
 void factor(){
@@ -240,8 +247,6 @@ int lex() {
  printf("Next token is: %d, Next lexeme is %s\n",
  nextToken, lexeme);
 
- // create a struct TOKEN and return it
- struct TOKEN newToken = {nextToken, lexeme};
 
  return nextToken;
 } /* End of function lex */
