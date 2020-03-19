@@ -67,6 +67,49 @@ int main() {
 
 }
 
+void factor(){
+  // must choose between two RHSs
+  printf("Enter <factor>\n");
+
+  // determine the RHSs
+  if(nextToken == IDENT || nextToken == INT_LIT){
+    lex(); // get next token
+  }
+  // if the RHS is <expr> tell the lex to pass over the left parenthesis and call expr and then check for right parentheses
+  else {
+    if(nextToken == LEFT_PAREN){
+      lex();
+      expr();
+      if(nextToken == RIGHT_PAREN){
+        lex();
+      }else {
+        error(); // should exist at the very top
+      }
+    }
+    else {
+      // it wasnt an id or int or left parentheses
+      error();
+    }
+  }
+
+  printf("Exit <factor>\n");
+}
+
+// parse term  
+void term() {
+  printf("Enter <term>\n");
+
+  // parse the first factor
+  factor();
+
+  // as long as the next is * or / get the next token and parse the next factor
+  while (nextToken == MULT_OP || nextToken == DIV_OP){
+    lex(); // get the next token
+    factor(); // parse the next factor
+  }
+  printf("Enter <expr> \n");
+}
+
 // parse expression
 void expr() {
   printf("Enter <expr> \n");
@@ -79,7 +122,10 @@ void expr() {
     lex();
     term();
   }
+  printf("Exit <expr> \n");
 }
+
+
 
 /*****************************************************/
 /* lookup - a function to lookup operators and parentheses
