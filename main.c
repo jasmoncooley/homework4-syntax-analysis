@@ -127,7 +127,10 @@ void expr() {
 
   // as long as the next token is + or -, get the next token and parse the next term
   while(nextToken == ADD_OP || nextToken == SUB_OP){
+    // updates next token
     lex();
+
+    // proocesses the term
     term();
   }
   printf("Exit <expr> \n");

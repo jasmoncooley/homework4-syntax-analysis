@@ -1,0 +1,6 @@
+this is where I keep notes for this assignment
+
+<stmt> → id = <expr>
+<expr> → <term> {(+ | -) <term>}
+<term> → <factor> {(* | /) <factor>}
+<factor> → id | int_constant | ( <expr> )
