@@ -20,10 +20,12 @@ void addChar();
 void getChar();
 void getNonBlank();
 int lex();
+
 /* Character classes */
 #define LETTER 0
 #define DIGIT 1
 #define UNKNOWN 99
+
 /* Token codes */
 #define INT_LIT 10
 #define IDENT 11
@@ -43,6 +45,7 @@ struct TOKEN {
 
 // function prototypes for just expr()
 void expr();
+void stmt();
 
 // define the grammar
 /*
@@ -61,8 +64,10 @@ int main() {
     // get characters and lex()?
     getChar();
     do {
+      printf("[FROM main()] before lex() %d \n", nextToken);
       lex();
-      expr();
+      printf("[FROM main()] %d \n\n", nextToken);
+      stmt();
     } while (nextToken != EOF);
   }
 
@@ -77,13 +82,16 @@ void error(){
 
 // the stmt function
 void stmt() {
-  printf("Enter <stmt>\n");
+  printf("Enter <stmt>\n\n");
 
-  // if the next token is an identifier 
-  if(nextToken == IDENT) {
-    lex(); // get next token
-
+  if (nextToken == IDENT){
+    printf("[FROM stmt()] found identifier. \n");
+    printf("[FROM stmt()] before lex() %d \n", nextChar);
+    lex(); //error in here
+    printf("[FROM stmt()] after lex() %d \n\n", nextToken);
   }
+  
+  //printf("[FROM stmt()] nxt token %d\n\n", nextToken);
 }
 void factor(){
   // must choose between two RHSs
@@ -177,6 +185,11 @@ int lookup(char ch) {
       addChar();
       nextToken = DIV_OP;
       break;
+    case '=':
+    // if the equal sign then set as assign op -> not sure what add char does
+      printf("[FROM lookup()] found the = \n");
+      addChar();
+      nextToken = ASSIGN_OP;
 
     default:
       addChar();
@@ -200,11 +213,12 @@ void addChar() {
  input and determine its character class */
 void getChar() {
   if ((nextChar = getc(in_fp)) != EOF){
+    printf("\n[FROM getChar()] nextChar = %c \n\n",nextChar);
     if (isalpha(nextChar))
-    charClass = LETTER;
- else if (isdigit(nextChar))
-  charClass = DIGIT;
- else charClass = UNKNOWN;
+      charClass = LETTER;
+    else if (isdigit(nextChar))
+      charClass = DIGIT;
+  else charClass = UNKNOWN;
  }
  else
  charClass = EOF;
@@ -214,7 +228,7 @@ void getChar() {
  returns a non-whitespace character */
 void getNonBlank() {
  while (isspace(nextChar))
- getChar();
+  getChar();
 }
 /*****************************************************/
 /* lex - a simple lexical analyzer for arithmetic
@@ -252,21 +266,22 @@ int lex() {
 
 /* Parentheses and operators */
  case UNKNOWN:
+  printf("[FROM lex()] %c\n",nextChar);
   lookup(nextChar);
   getChar();
   break;
 
 /* EOF */
  case EOF:
- nextToken = EOF;
- lexeme[0] = 'E';
- lexeme[1] = 'O';
- lexeme[2] = 'F';
- lexeme[3] = 0;
- break;
+  nextToken = EOF;
+  lexeme[0] = 'E';
+  lexeme[1] = 'O';
+  lexeme[2] = 'F';
+  lexeme[3] = 0;
+  break;
  } /* End of switch */
- printf("Next token is: %d, Next lexeme is %s\n",
- nextToken, lexeme);
+
+ printf("Next token is: %d, Next lexeme is %s\n", nextToken, lexeme);
 
 
  return nextToken;
