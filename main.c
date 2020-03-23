@@ -75,6 +75,16 @@ void error(){
   printf("ERROR: \n");
 }
 
+// the stmt function
+void stmt() {
+  printf("Enter <stmt>\n");
+
+  // if the next token is an identifier 
+  if(nextToken == IDENT) {
+    lex(); // get next token
+
+  }
+}
 void factor(){
   // must choose between two RHSs
   printf("Enter <factor>\n");
@@ -216,29 +226,36 @@ int lex() {
 
 /* Parse identifiers */
  case LETTER:
- addChar();
- getChar();
- while (charClass == LETTER || charClass == DIGIT) {
- addChar();
- getChar();
- }
- nextToken = IDENT;
- break;
+  addChar();
+  getChar();
+
+  while (charClass == LETTER || charClass == DIGIT) {
+    addChar();
+    getChar();
+  }
+
+  nextToken = IDENT;
+  break;
+  
 /* Parse integer literals */
  case DIGIT:
- addChar();
- getChar();
- while (charClass == DIGIT) {
- addChar();
- getChar();
- }
- nextToken = INT_LIT;
- break;
+  addChar();
+  getChar();
+
+  while (charClass == DIGIT) {
+    addChar();
+    getChar();
+  }
+
+  nextToken = INT_LIT;
+  break;
+
 /* Parentheses and operators */
  case UNKNOWN:
- lookup(nextChar);
- getChar();
- break;
+  lookup(nextChar);
+  getChar();
+  break;
+
 /* EOF */
  case EOF:
  nextToken = EOF;
