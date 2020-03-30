@@ -80,14 +80,21 @@ void error(){
 
 // the stmt function
 void stmt() {
-  printf("Enter <stmt>\n\n");
+  printf("Enter <stmt>\n");
 
   if (nextToken == IDENT){
     //printf("[FROM stmt()] found identifier. \n");
     //printf("[FROM stmt()] nextChar before lex() |%d| \n", nextChar);
     lex(); //error in here
+
+    if (nextToken == ASSIGN_OP){
+      lex();
+      expr();
+    }
     //printf("[FROM stmt()] after lex() %d \n\n", nextToken);
   }
+
+  printf("Exit <stmt>\n");
   
   //printf("[FROM stmt()] nxt token %d\n\n", nextToken);
 }
@@ -186,7 +193,7 @@ int lookup(char ch) {
     case '=':
     // if the equal sign then set as assign op -> not sure what add char does
       //printf("[FROM lookup()] found the = \n");
-      //addChar();
+      addChar();
       nextToken = ASSIGN_OP;
       break;
 
