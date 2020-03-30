@@ -12,7 +12,7 @@ char lexeme [100];
 char nextChar;
 int lexLen;
 int token;
-int nextToken;
+int nextToken = -2;
 FILE *in_fp, *fopen();
 
 /* Function declarations */
@@ -59,11 +59,11 @@ int main() {
     // get characters and lex()?
     getChar();
     do {
-      printf("[FROM main()] before lex() %d \n", nextToken);
+      //printf("[FROM main()] before lex() %d \n", nextToken);
 
       lex();
 
-      printf("[FROM main()] after lex() %d \n\n", nextToken);
+      //printf("[FROM main()] after lex() %d \n\n", nextToken);
 
       stmt();
     } while (nextToken != EOF);
@@ -83,10 +83,10 @@ void stmt() {
   printf("Enter <stmt>\n\n");
 
   if (nextToken == IDENT){
-    printf("[FROM stmt()] found identifier. \n");
-    printf("[FROM stmt()] before lex() %d \n", nextChar);
+    //printf("[FROM stmt()] found identifier. \n");
+    //printf("[FROM stmt()] nextChar before lex() |%d| \n", nextChar);
     lex(); //error in here
-    printf("[FROM stmt()] after lex() %d \n\n", nextToken);
+    //printf("[FROM stmt()] after lex() %d \n\n", nextToken);
   }
   
   //printf("[FROM stmt()] nxt token %d\n\n", nextToken);
@@ -185,9 +185,10 @@ int lookup(char ch) {
       break;
     case '=':
     // if the equal sign then set as assign op -> not sure what add char does
-      printf("[FROM lookup()] found the = \n");
-      addChar();
+      //printf("[FROM lookup()] found the = \n");
+      //addChar();
       nextToken = ASSIGN_OP;
+      break;
 
     default:
       addChar();
@@ -264,7 +265,7 @@ int lex() {
 
 /* Parentheses and operators */
  case UNKNOWN:
-  printf("[FROM lex()] %c\n",nextChar);
+  //printf("[FROM lex()] nextChar %c\n",nextChar);
   lookup(nextChar);
   getChar();
   break;
