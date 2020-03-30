@@ -37,11 +37,6 @@ int lex();
 #define LEFT_PAREN 25
 #define RIGHT_PAREN 26
 
-// define a struct as the token
-struct TOKEN {
-  int token_number;
-  char lexeme[100];
-};
 
 // function prototypes for just expr()
 void expr();
@@ -65,8 +60,11 @@ int main() {
     getChar();
     do {
       printf("[FROM main()] before lex() %d \n", nextToken);
+
       lex();
-      printf("[FROM main()] %d \n\n", nextToken);
+
+      printf("[FROM main()] after lex() %d \n\n", nextToken);
+
       stmt();
     } while (nextToken != EOF);
   }
@@ -213,7 +211,7 @@ void addChar() {
  input and determine its character class */
 void getChar() {
   if ((nextChar = getc(in_fp)) != EOF){
-    printf("\n[FROM getChar()] nextChar = %c \n\n",nextChar);
+    //printf("\n[FROM getChar()] nextChar = %c \n\n",nextChar);
     if (isalpha(nextChar))
       charClass = LETTER;
     else if (isdigit(nextChar))
