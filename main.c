@@ -185,8 +185,6 @@ int lookup(char ch) {
       nextToken = DIV_OP;
       break;
     case '=':
-    // if the equal sign then set as assign op -> not sure what add char does
-      //printf("[FROM lookup()] found the = \n");
       addChar();
       nextToken = ASSIGN_OP;
       break;
