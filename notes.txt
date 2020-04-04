@@ -4,3 +4,44 @@ this is where I keep notes for this assignment
 <expr> → <term> {(+ | -) <term>}
 <term> → <factor> {(* | /) <factor>}
 <factor> → id | int_constant | ( <expr> )
+
+a = 4
+abc = 5
+a12 = 6
+abc12xy34 = 7
+a = b
+a = 122342
+a = adzlcxkvzcvcxvkkkkkkkkkkkkk
+a = adfasd1231231
+a = a + b
+a = 6 + a
+a = a + 7
+a = 9 + 8
+a = 1234567890 + abcxyzdefghig
+a = xyzabcdefghigj + 1234567890
+a = abcxyz123ABC2345ZYX + XYZZZZ6094234jlkdflk232233
+a = 1234232352035923 + 30495304530459345
+a = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9
+a = 1 - 2 + 3 - 4 + 5 - 6 + 7 - 8 + 9
+a = 1 - 2 * 3 + 4 + 5 / 6 + 7 - 8 * 9
+a = 1 + 2 * 3 * 4 - 5 / 6 / 7 - 8 + 9
+a = 1 * 2 / 3 * 4 - 5 / 6 * 7 / 8 + 9
+a = abc + 123 + abc123 + 12000000000000089
+a = (abc - 123 - abc123 - 120000000000000089)
+a = abc * 123 * abc123 * 120901230123123
+a = (abc / 123 / abc123 / 1212090999999989)
+a = abcd + bef * c / ( 23 - 54 ) - 100
+a = abcd * bef + c + ( 23 - 54 ) / 100
+a = abcd + ( bef * c ) / ( 23 - 54 ) - 100
+a = abcd + ( bef * c / ( 23 - 54 ) ) - 100
+a = abc111ddd333 + ( ( bef * c + xyz123 ) / ( 23 - 54 ) ) - 100
+a = a +
+a = + a
+a = a + +
+a = a a
+a = +
+a = + +
+a = a + b b + c
+a = a + b + + c
+a = a + ( b + c
+a = a + ( b + ( c + d ) + e

@@ -59,12 +59,8 @@ int main() {
     // get characters and lex()?
     getChar();
     do {
-      //printf("[FROM main()] before lex() %d \n", nextToken);
 
       lex();
-
-      //printf("[FROM main()] after lex() %d \n\n", nextToken);
-
       stmt();
     } while (nextToken != EOF);
   }
@@ -83,8 +79,6 @@ void stmt() {
   printf("Enter <stmt>\n");
 
   if (nextToken == IDENT){
-    //printf("[FROM stmt()] found identifier. \n");
-    //printf("[FROM stmt()] nextChar before lex() |%d| \n", nextChar);
     lex(); //error in here
 
     if (nextToken == ASSIGN_OP){
