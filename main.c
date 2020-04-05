@@ -70,8 +70,13 @@ int main() {
 
 }
 
-void error(){
-  printf("ERROR: \n");
+void error(const char * msg){
+  printf("===ERROR: %s: %d %s \n", msg, nextToken, lexeme);
+}
+
+void expect_error(int EXPECTED_CODE){
+  // this handles parsing expect errors
+  printf("Parsing Error: Expected %d got token %d, lexeme: %s \n", EXPECTED_CODE, nextToken, lexeme);
 }
 
 // the stmt function
@@ -79,12 +84,18 @@ void stmt() {
   printf("Enter <stmt>\n");
 
   if (nextToken == IDENT){
-    lex(); //error in here
+    lex(); // gets the next token
 
     if (nextToken == ASSIGN_OP){
       lex();
       expr();
+    } else {
+      // throw an expect error
+      expect_error(ASSIGN_OP);
     }
+  } else {
+    // throw an expect error 
+    expect_error(IDENT);
   }
 
   printf("Exit <stmt>\n");
@@ -105,12 +116,12 @@ void factor(){
       if(nextToken == RIGHT_PAREN){
         lex();
       }else {
-        error(); // should exist at the very top
+        error("Some error happened"); // should exist at the very top
       }
     }
     else {
       // it wasnt an id or int or left parentheses
-      error();
+      error("Some other error happened");
     }
   }
 
