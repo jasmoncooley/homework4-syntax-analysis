@@ -85,12 +85,9 @@ void stmt() {
       lex();
       expr();
     }
-    //printf("[FROM stmt()] after lex() %d \n\n", nextToken);
   }
 
   printf("Exit <stmt>\n");
-  
-  //printf("[FROM stmt()] nxt token %d\n\n", nextToken);
 }
 void factor(){
   // must choose between two RHSs
@@ -211,7 +208,6 @@ void addChar() {
  input and determine its character class */
 void getChar() {
   if ((nextChar = getc(in_fp)) != EOF){
-    //printf("\n[FROM getChar()] nextChar = %c \n\n",nextChar);
     if (isalpha(nextChar))
       charClass = LETTER;
     else if (isdigit(nextChar))
@@ -264,7 +260,6 @@ int lex() {
 
 /* Parentheses and operators */
  case UNKNOWN:
-  //printf("[FROM lex()] nextChar %c\n",nextChar);
   lookup(nextChar);
   getChar();
   break;
