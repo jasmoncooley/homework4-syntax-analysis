@@ -5,6 +5,10 @@
  arithmetic expressions */
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
 /* Global declarations */
 /* Variables */
 int charClass;
@@ -13,6 +17,9 @@ char nextChar;
 int lexLen;
 int token;
 int nextToken = -2;
+off_t fileSize = 0;
+off_t getCharCount = 0;
+
 FILE *in_fp, *fopen();
 
 /* Function declarations */
@@ -42,6 +49,16 @@ int lex();
 void expr();
 void stmt();
 
+// utility functions
+off_t fsize(const char *filename) {
+    struct stat st; 
+
+    if (stat(filename, &st) == 0)
+        return st.st_size;
+
+    return -1; 
+}
+
 // define the grammar
 /*
 <expr> → <term> {(+ | -) <term>}
@@ -51,6 +68,11 @@ void stmt();
 /******************************************************/
 /* main driver */
 int main() {
+
+// determine the file size:
+fileSize = fsize("front.in");
+
+printf("SIZE OF FILE: %ld \n", fileSize);
 /* Open the input data file and process its contents */
   if ((in_fp = fopen("front.in", "r")) == NULL)
     // open the file
@@ -62,7 +84,10 @@ int main() {
 
       lex();
       stmt();
-    } while (nextToken != EOF);
+    } while (getCharCount < fileSize);
+
+    printf("GET CHAR COUNT: %ld\n", getCharCount);
+    printf("Execution stopped.");
   }
 
   // seems like the tokenizer is already implemented for us -> will need to parse as tokens come in
@@ -71,12 +96,17 @@ int main() {
 }
 
 void error(const char * msg){
-  printf("===ERROR: %s: %d %s \n", msg, nextToken, lexeme);
+  printf("ERROR: %s: %d %s \n", msg, nextToken, lexeme);
+  exit(0);
+
 }
 
 void expect_error(int EXPECTED_CODE){
   // this handles parsing expect errors
   printf("Parsing Error: Expected %d got token %d, lexeme: %s \n", EXPECTED_CODE, nextToken, lexeme);
+
+  exit(0);
+
 }
 
 // the stmt function
@@ -112,16 +142,16 @@ void factor(){
   else {
     if(nextToken == LEFT_PAREN){
       lex();
-      expr();
+      expr(); // parse the expr 
       if(nextToken == RIGHT_PAREN){
         lex();
       }else {
-        error("Some error happened"); // should exist at the very top
+        expect_error(RIGHT_PAREN); // should exist at the very top
       }
     }
     else {
-      // it wasnt an id or int or left parentheses
-      error("Some other error happened");
+      // it wasnt an id or int or left parentheses -- will just call left paren for now.
+      expect_error(LEFT_PAREN);
     }
   }
 
@@ -135,12 +165,13 @@ void term() {
   // parse the first factor
   factor();
 
+  // zero or more
   // as long as the next is * or / get the next token and parse the next factor
   while (nextToken == MULT_OP || nextToken == DIV_OP){
     lex(); // get the next token
     factor(); // parse the next factor
   }
-  printf("Enter <expr> \n");
+  printf("Exit <term> \n");
 }
 
 // parse expression
@@ -150,15 +181,26 @@ void expr() {
   // parse first term
   term();
 
-  // as long as the next token is + or -, get the next token and parse the next term
-  while(nextToken == ADD_OP || nextToken == SUB_OP){
-    // updates next token
-    lex();
-
-    // proocesses the term
-    term();
+  if(nextToken == IDENT){
+    error("Found an Identifier where it was not expected");
   }
+  // 0 or more occurences
+    // as long as the next token is + or -, get the next token and parse the next term
+    while(nextToken == ADD_OP || nextToken == SUB_OP){
+      // updates next token
+      lex();
+
+      // proocesses the term
+      term();
+
+      
+    }
+  
+
+  // if the next token after the term is not +, - or 
   printf("Exit <expr> \n");
+
+  
 }
 
 
@@ -218,15 +260,22 @@ void addChar() {
 /* getChar - a function to get the next character of
  input and determine its character class */
 void getChar() {
+  if((nextChar = getc(in_fp) == '\n')){
+    
+  }
   if ((nextChar = getc(in_fp)) != EOF){
     if (isalpha(nextChar))
       charClass = LETTER;
     else if (isdigit(nextChar))
       charClass = DIGIT;
   else charClass = UNKNOWN;
+ } else{
+   charClass = EOF;
  }
- else
- charClass = EOF;
+
+ // anytime this function processes increment the counter
+ getCharCount++;
+ 
 }
 /*****************************************************/
 /* getNonBlank - a function to call getChar until it
