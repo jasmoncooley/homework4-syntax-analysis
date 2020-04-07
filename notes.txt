@@ -45,3 +45,194 @@ a = a + b b + c
 a = a + b + + c
 a = a + ( b + c
 a = a + ( b + ( c + d ) + e
+
+
+Example Test Cases from Piazza
+
+1. a = a  b + b
+
+output:
+Next token is: 11 Next lexeme is a
+Enter <stmt>
+Next token is: 20 Next lexeme is =
+Next token is: 11 Next lexeme is a
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 11 Next lexeme is b
+Exit <factor>
+Exit <term>
+Exit <expr>
+Error
+
+2. a = a + b
+b = 7
+
+output:
+
+
+3. a = b + 1
+
+a = 1 + b
+
+(works)
+
+output:
+Next token is: 11 Next lexeme is a
+Enter <stmt>
+Next token is: 20 Next lexeme is =
+Next token is: 11 Next lexeme is b
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 21 Next lexeme is +
+Exit <factor>
+Exit <term>
+Next token is: 10 Next lexeme is 1
+Enter <term>
+Enter <factor>
+Next token is: -1 Next lexeme is EOF
+Exit <factor>
+Exit <term>
+Exit <expr>
+Exit <stmt>
+Next token is: -1 Next lexeme is EOF
+Next token is: 11 Next lexeme is a
+Enter <stmt>
+Next token is: 20 Next lexeme is =
+Next token is: 10 Next lexeme is 1
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 21 Next lexeme is +
+Exit <factor>
+Exit <term>
+Next token is: 11 Next lexeme is b
+Enter <term>
+Enter <factor>
+Next token is: -1 Next lexeme is EOF
+Exit <factor>
+Exit <term>
+Exit <expr>
+Exit <stmt>
+
+4. a = b + 1
+
+(works)
+
+output:
+Next token is: 11 Next lexeme is a
+Enter <stmt>
+Next token is: 20 Next lexeme is =
+Next token is: 11 Next lexeme is b
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 21 Next lexeme is +
+Exit <factor>
+Exit <term>
+Next token is: 10 Next lexeme is 1
+Enter <term>
+Enter <factor>
+Next token is: -1 Next lexeme is EOF
+Exit <factor>
+Exit <term>
+Exit <expr>
+Exit <stmt>
+
+5. a = b + 1 + 
+
+(works)
+
+Next token is: 11 Next lexeme is a
+Enter <stmt>
+Next token is: 20 Next lexeme is =
+Next token is: 11 Next lexeme is b
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 21 Next lexeme is +
+Exit <factor>
+Exit <term>
+Next token is: 10 Next lexeme is 1
+Enter <term>
+Enter <factor>
+Next token is: 21 Next lexeme is +
+Exit <factor>
+Exit <term>
+Next token is: -1 Next lexeme is EOF
+Enter <term>
+Enter <factor>
+Error
+
+6. a = (b + 1
+
+output: 
+Next token is: 11 Next lexeme is a
+Enter <stmt>
+Next token is: 20 Next lexeme is =
+Next token is: 25 Next lexeme is (
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 11 Next lexeme is b
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 21 Next lexeme is +
+Exit <factor>
+Exit <term>
+Next token is: 10 Next lexeme is 1
+Enter <term>
+Enter <factor>
+Next token is: -1 Next lexeme is EOF
+Exit <factor>
+Exit <term>
+Exit <expr>
+Error
+
+7. 
+a = b + 1
+
+a = 1 + b
+
+(works)
+
+output:
+Next token is: 11 Next lexeme is a
+Enter <stmt>
+Next token is: 20 Next lexeme is =
+Next token is: 11 Next lexeme is b
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 21 Next lexeme is +
+Exit <factor>
+Exit <term>
+Next token is: 10 Next lexeme is 1
+Enter <term>
+Enter <factor>
+Next token is: -1 Next lexeme is EOF
+Exit <factor>
+Exit <term>
+Exit <expr>
+Exit <stmt>
+Next token is: -1 Next lexeme is EOF
+Next token is: 11 Next lexeme is a
+Enter <stmt>
+Next token is: 20 Next lexeme is =
+Next token is: 10 Next lexeme is 1
+Enter <expr>
+Enter <term>
+Enter <factor>
+Next token is: 21 Next lexeme is +
+Exit <factor>
+Exit <term>
+Next token is: 11 Next lexeme is b
+Enter <term>
+Enter <factor>
+Next token is: -1 Next lexeme is EOF
+Exit <factor>
+Exit <term>
+Exit <expr>
+Exit <stmt>

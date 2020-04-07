@@ -123,10 +123,7 @@ void stmt() {
       // throw an expect error
       expect_error(ASSIGN_OP);
     }
-  } else {
-    // throw an expect error 
-    expect_error(IDENT);
-  }
+  } 
 
   printf("Exit <stmt>\n");
 }
@@ -238,7 +235,13 @@ int lookup(char ch) {
       addChar();
       nextToken = ASSIGN_OP;
       break;
-
+    case '\n':
+      lexeme[0] = 'E';
+      lexeme[1] = 'O';
+      lexeme[2] = 'F';
+      lexeme[3] = 0;
+      nextToken = EOF;
+      break;
     default:
       addChar();
       nextToken = EOF;
@@ -260,28 +263,28 @@ void addChar() {
 /* getChar - a function to get the next character of
  input and determine its character class */
 void getChar() {
-  if((nextChar = getc(in_fp) == '\n')){
-    
-  }
+
   if ((nextChar = getc(in_fp)) != EOF){
     if (isalpha(nextChar))
       charClass = LETTER;
     else if (isdigit(nextChar))
       charClass = DIGIT;
-  else charClass = UNKNOWN;
+    else 
+      charClass = UNKNOWN;
  } else{
    charClass = EOF;
  }
-
  // anytime this function processes increment the counter
  getCharCount++;
  
 }
+
+
 /*****************************************************/
 /* getNonBlank - a function to call getChar until it
  returns a non-whitespace character */
 void getNonBlank() {
- while (isspace(nextChar))
+ while (isspace(nextChar) && nextChar != '\n')
   getChar();
 }
 /*****************************************************/
