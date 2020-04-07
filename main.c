@@ -70,11 +70,11 @@ off_t fsize(const char *filename) {
 int main(int argc, char *argv[]) {
 
 // determine the file size:
-fileSize = fsize("front.in");
+fileSize = fsize(argv[1]);
 
 //printf("SIZE OF FILE: %ld \n", fileSize);
 /* Open the input data file and process its contents */
-  if ((in_fp = fopen("front.in", "r")) == NULL)
+  if ((in_fp = fopen(argv[1], "r")) == NULL)
     // open the file
     printf("ERROR - cannot open front.in \n");
   else {
