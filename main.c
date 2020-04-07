@@ -67,12 +67,12 @@ off_t fsize(const char *filename) {
 */
 /******************************************************/
 /* main driver */
-int main() {
+int main(int argc, char *argv[]) {
 
 // determine the file size:
 fileSize = fsize("front.in");
 
-printf("SIZE OF FILE: %ld \n", fileSize);
+//printf("SIZE OF FILE: %ld \n", fileSize);
 /* Open the input data file and process its contents */
   if ((in_fp = fopen("front.in", "r")) == NULL)
     // open the file
@@ -86,8 +86,8 @@ printf("SIZE OF FILE: %ld \n", fileSize);
       stmt();
     } while (getCharCount < fileSize);
 
-    printf("GET CHAR COUNT: %ld\n", getCharCount);
-    printf("Execution stopped.");
+    //printf("GET CHAR COUNT: %ld\n", getCharCount);
+    //printf("Execution stopped.");
   }
 
   // seems like the tokenizer is already implemented for us -> will need to parse as tokens come in
@@ -96,15 +96,16 @@ printf("SIZE OF FILE: %ld \n", fileSize);
 }
 
 void error(const char * msg){
-  printf("ERROR: %s: %d %s \n", msg, nextToken, lexeme);
+  // printf("ERROR: %s: %d %s \n", msg, nextToken, lexeme);
+  printf("Error");
   exit(0);
 
 }
 
 void expect_error(int EXPECTED_CODE){
   // this handles parsing expect errors
-  printf("Parsing Error: Expected %d got token %d, lexeme: %s \n", EXPECTED_CODE, nextToken, lexeme);
-
+  //printf("Parsing Error: Expected %d got token %d, lexeme: %s \n", EXPECTED_CODE, nextToken, lexeme);
+  printf("Error");
   exit(0);
 
 }
